@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "border-core",
+    "border-generic-replay-buffer",
     "border-tensorboard",
     "border-mlflow-tracking",
     "border-py-gym-env",

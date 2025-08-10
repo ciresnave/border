@@ -10,7 +10,7 @@ license.workspace = true
 readme = "README.md"
 
 [dependencies]
-border-core = { version = "0.0.8", path = "../border-core" }
+border-core = { version = "0.0.9", path = "../border-core" }
 reqwest = { workspace = true }
 anyhow = { workspace = true }
 serde = { workspace = true, features = ["derive"] }

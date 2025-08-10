@@ -4,7 +4,7 @@
 //! and calculates the average return across all episodes.
 
 use super::Evaluator;
-use crate::{record::Record, Agent, Env, ReplayBufferBase};
+use crate::{record::Record, Agent, Env, ReplayBuffer};
 use anyhow::Result;
 
 /// A default implementation of the [`Evaluator`] trait.
@@ -63,7 +63,7 @@ impl<E: Env> Evaluator<E> for DefaultEvaluator<E> {
     /// - The environment fails to step
     fn evaluate<R>(&mut self, policy: &mut Box<dyn Agent<E, R>>) -> Result<(f32, Record)>
     where
-        R: ReplayBufferBase,
+        R: ReplayBuffer,
     {
         let mut r_total = 0f32;
 

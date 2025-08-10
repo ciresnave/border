@@ -9,7 +9,7 @@
 mod iw_scheduler;
 mod sum_tree;
 use super::{config::PerConfig, BatchBase, GenericTransitionBatch, SimpleReplayBufferConfig};
-use crate::{ExperienceBufferBase, ReplayBufferBase, TransitionBatch};
+use crate::{ExperienceBuffer, ReplayBuffer, TransitionBatch};
 use anyhow::Result;
 pub use iw_scheduler::IwScheduler;
 use rand::{rngs::StdRng, RngCore, SeedableRng};
@@ -267,7 +267,7 @@ where
     }
 }
 
-impl<O, A> ExperienceBufferBase for SimpleReplayBuffer<O, A>
+impl<O, A> ExperienceBuffer for SimpleReplayBuffer<O, A>
 where
     O: BatchBase,
     A: BatchBase,
@@ -316,7 +316,7 @@ where
     }
 }
 
-impl<O, A> ReplayBufferBase for SimpleReplayBuffer<O, A>
+impl<O, A> ReplayBuffer for SimpleReplayBuffer<O, A>
 where
     O: BatchBase,
     A: BatchBase,

@@ -21,7 +21,7 @@
 //! 3. Performance Monitoring:
 //!    * Monitor episode length
 //!    * Record environment metrics
-use crate::{record::Record, Agent, Env, ExperienceBufferBase, ReplayBufferBase, StepProcessor};
+use crate::{record::Record, Agent, Env, ExperienceBuffer, ReplayBuffer, StepProcessor};
 use anyhow::Result;
 
 /// Manages the sampling of experiences from the environment.
@@ -102,8 +102,8 @@ where
         buffer: &mut R_,
     ) -> Result<Record>
     where
-        R: ExperienceBufferBase<Item = P::Output> + ReplayBufferBase,
-        R_: ExperienceBufferBase<Item = R::Item>,
+        R: ExperienceBuffer<Item = P::Output> + ReplayBuffer,
+        R_: ExperienceBuffer<Item = R::Item>,
     {
         // Reset environment(s) if required
         if self.prev_obs.is_none() {

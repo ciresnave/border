@@ -1,6 +1,6 @@
 use crate::{system_time_as_millis, Experiment, MlflowTrackingRecorder, Run};
 use anyhow::Result;
-use border_core::{Env, ReplayBufferBase};
+use border_core::{Env, ReplayBuffer};
 use log::info;
 use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
@@ -212,7 +212,7 @@ impl MlflowTrackingClient {
     ) -> Result<MlflowTrackingRecorder<E, R>>
     where
         E: Env,
-        R: ReplayBufferBase,
+        R: ReplayBuffer,
     {
         let run_name = run_name.as_ref();
         let run = {

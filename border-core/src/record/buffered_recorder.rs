@@ -6,7 +6,7 @@
 //! learning environments.
 
 use super::{Record, Recorder};
-use crate::{Env, ReplayBufferBase};
+use crate::{Env, ReplayBuffer};
 use std::marker::PhantomData;
 
 /// A recorder that buffers sequences of observations and actions in memory.
@@ -19,12 +19,12 @@ use std::marker::PhantomData;
 /// # Type Parameters
 ///
 /// * `E` - The environment type that implements the [`Env`] trait
-/// * `R` - The replay buffer type that implements the [`ReplayBufferBase`] trait
+/// * `R` - The replay buffer type that implements the [`ReplayBuffer`] trait
 #[derive(Default)]
 pub struct BufferedRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// The internal buffer storing the sequence of records
     buf: Vec<Record>,
@@ -35,7 +35,7 @@ where
 impl<E, R> BufferedRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// Creates a new empty buffered recorder.
     ///
@@ -57,7 +57,7 @@ where
     /// # Returns
     ///
     /// An iterator over references to the [`Record`]s in the buffer.
-    pub fn iter(&self) -> std::slice::Iter<Record> {
+    pub fn iter(&self) -> std::slice::Iter<'_, Record> {
         self.buf.iter()
     }
 }
@@ -65,7 +65,7 @@ where
 impl<E, R> Recorder<E, R> for BufferedRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// Writes a [`Record`] to the internal buffer.
     ///

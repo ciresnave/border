@@ -90,7 +90,7 @@ impl crate::TransitionBatch for DummyBatch {
 /// Dummy replay buffer.
 pub struct DummyReplayBuffer;
 
-impl crate::ReplayBufferBase for DummyReplayBuffer {
+impl crate::ReplayBuffer for DummyReplayBuffer {
     type Batch = DummyBatch;
     type Config = usize;
 

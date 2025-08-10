@@ -7,7 +7,7 @@ use anyhow::Result;
 use border_core::{
     generic_replay_buffer::{BatchBase, SimpleReplayBuffer},
     record::Record,
-    Agent as Agent_, Configurable, Policy, ReplayBufferBase,
+    Agent as Agent_, Configurable, Policy, ReplayBuffer as ReplayBuffer_,
 };
 use serde::Deserialize;
 use std::ptr::copy;
@@ -164,7 +164,7 @@ impl Configurable for RandomAgent {
     }
 }
 
-impl<R: ReplayBufferBase> Agent_<Env, R> for RandomAgent {
+impl<R: ReplayBuffer_> Agent_<Env, R> for RandomAgent {
     fn train(&mut self) {
         self.train = true;
     }

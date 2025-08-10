@@ -12,7 +12,7 @@ use border_candle_agent::{
 use border_core::{
     generic_replay_buffer::{BatchBase, SimpleReplayBuffer},
     record::Recorder,
-    Agent, Configurable, Env, Evaluator, ExperienceBufferBase, ReplayBufferBase, Trainer,
+    Agent, Configurable, Env, Evaluator, ExperienceBuffer, ReplayBuffer, Trainer,
     TrainerConfig, TransitionBatch,
 };
 use border_minari::{
@@ -197,7 +197,7 @@ where
     E: Env + 'static,
     E::Obs: Into<Tensor>,
     E::Act: From<Tensor> + Into<Tensor>,
-    R: ReplayBufferBase + 'static,
+    R: ReplayBuffer + 'static,
     R::Batch: TransitionBatch,
     <R::Batch as TransitionBatch>::ObsBatch: Into<Tensor> + Clone,
     <R::Batch as TransitionBatch>::ActBatch: Into<Tensor> + Clone,
@@ -224,7 +224,7 @@ where
 fn create_recorder<E, R>(config: &PenConfig) -> Result<Box<dyn Recorder<E, R>>>
 where
     E: Env + 'static,
-    R: ReplayBufferBase + 'static,
+    R: ReplayBuffer + 'static,
 {
     log::info!("Create recorder");
     if let Some(mlflow_run_name) = &config.args.mlflow_run_name {

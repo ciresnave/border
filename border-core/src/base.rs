@@ -15,7 +15,7 @@ pub use agent::Agent;
 pub use batch::TransitionBatch;
 pub use env::Env;
 pub use policy::{Configurable, Policy};
-pub use replay_buffer::{ExperienceBufferBase, NullReplayBuffer, ReplayBufferBase};
+pub use replay_buffer::{ExperienceBuffer, NullReplayBuffer, ReplayBuffer};
 use std::fmt::Debug;
 pub use step::{Info, Step, StepProcessor};
 

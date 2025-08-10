@@ -5,7 +5,7 @@ use border_core::{
         SimpleStepProcessorConfig,
     },
     record::Recorder,
-    Agent, Configurable, DefaultEvaluator, Env as _, Evaluator as _, ReplayBufferBase,
+    Agent, Configurable, DefaultEvaluator, Env as _, Evaluator as _, ReplayBuffer as _,
     StepProcessor, Trainer, TrainerConfig,
 };
 use border_mlflow_tracking::MlflowTrackingClient;

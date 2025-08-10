@@ -2,7 +2,7 @@ use crate::{util, MinariConverter, MinariEnv};
 use anyhow::Result;
 use border_core::{
     generic_replay_buffer::{GenericTransitionBatch, SimpleReplayBuffer, SimpleReplayBufferConfig},
-    ExperienceBufferBase, ReplayBufferBase,
+    ExperienceBuffer, ReplayBuffer,
 };
 use pyo3::{
     types::{IntoPyDict, PyIterator},

@@ -7,7 +7,7 @@ use crate::{
 use anyhow::Result;
 use border_core::{
     record::{Record, RecordValue},
-    Agent, Configurable, Env, Policy, ReplayBufferBase, TransitionBatch,
+    Agent, Configurable, Env, Policy, ReplayBuffer, TransitionBatch,
 };
 use log::trace;
 use serde::{de::DeserializeOwned, Serialize};
@@ -53,7 +53,7 @@ where
     E: Env,
     F: SubModel<Output = Tensor>,
     M: SubModel<Input = Tensor, Output = Tensor>,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
     F::Config: DeserializeOwned + Serialize,
     M::Config: DeserializeOwned + Serialize + OutDim,
     R::Batch: TransitionBatch,
@@ -275,7 +275,7 @@ where
     E: Env + 'static,
     F: SubModel<Output = Tensor> + 'static,
     M: SubModel<Input = Tensor, Output = Tensor> + 'static,
-    R: ReplayBufferBase + 'static,
+    R: ReplayBuffer + 'static,
     E::Obs: Into<F::Input>,
     E::Act: From<Tensor>,
     F::Config: DeserializeOwned + Serialize + Clone,

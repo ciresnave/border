@@ -3,7 +3,7 @@
 //! The [`Agent`] trait extends [`Policy`] with training capabilities, allowing the policy to
 //! learn from interactions with the environment. It provides methods for training, evaluation,
 //! parameter optimization, and model persistence.
-use super::{Env, Policy, ReplayBufferBase};
+use super::{Env, Policy, ReplayBuffer};
 use crate::record::Record;
 use anyhow::Result;
 use std::path::{Path, PathBuf};
@@ -21,7 +21,7 @@ use std::path::{Path, PathBuf};
 ///
 /// During training, the agent uses a replay buffer to store and sample experiences,
 /// which are then used to update the policy's parameters through optimization steps.
-pub trait Agent<E: Env, R: ReplayBufferBase>: Policy<E> {
+pub trait Agent<E: Env, R: ReplayBuffer>: Policy<E> {
     /// Switches the agent to training mode.
     ///
     /// In training mode, the policy may become stochastic to facilitate exploration.

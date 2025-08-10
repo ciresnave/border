@@ -5,7 +5,7 @@ use anyhow::Result;
 use args::Args;
 use border_core::{
     generic_replay_buffer::SimpleStepProcessorConfig, record::Recorder, Agent, Configurable,
-    Env as _, Evaluator as _, ReplayBufferBase, StepProcessor, Trainer,
+    Env as _, Evaluator as _, ReplayBuffer, StepProcessor, Trainer,
 };
 use border_mlflow_tracking::MlflowTrackingClient;
 use border_tensorboard::TensorboardRecorder;

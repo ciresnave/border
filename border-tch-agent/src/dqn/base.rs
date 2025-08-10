@@ -7,7 +7,7 @@ use crate::{
 use anyhow::Result;
 use border_core::{
     record::{Record, RecordValue},
-    Agent, Configurable, Env, Policy, ReplayBufferBase, TransitionBatch,
+    Agent, Configurable, Env, Policy, ReplayBuffer, TransitionBatch,
 };
 use serde::{de::DeserializeOwned, Serialize};
 use std::{
@@ -51,7 +51,7 @@ impl<E, Q, R> Dqn<E, Q, R>
 where
     E: Env,
     Q: SubModel<Output = Tensor>,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
     Q::Config: DeserializeOwned + Serialize + OutDim + std::fmt::Debug + PartialEq + Clone,
     R::Batch: TransitionBatch,
     <R::Batch as TransitionBatch>::ObsBatch: Into<Q::Input>,
@@ -289,7 +289,7 @@ impl<E, Q, R> Agent<E, R> for Dqn<E, Q, R>
 where
     E: Env + 'static,
     Q: SubModel<Output = Tensor> + 'static,
-    R: ReplayBufferBase + 'static,
+    R: ReplayBuffer + 'static,
     E::Obs: Into<Q::Input>,
     E::Act: From<Q::Output>,
     Q::Config: DeserializeOwned + Serialize + OutDim + std::fmt::Debug + PartialEq + Clone,
@@ -378,7 +378,7 @@ impl<E, Q, R> SyncModel for Dqn<E, Q, R>
 where
     E: Env,
     Q: SubModel<Output = Tensor>,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
     E::Obs: Into<Q::Input>,
     E::Act: From<Q::Output>,
     Q::Config: DeserializeOwned + Serialize + OutDim + std::fmt::Debug + PartialEq + Clone,

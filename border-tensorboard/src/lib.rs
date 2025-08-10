@@ -5,7 +5,7 @@
 use anyhow::Result;
 use border_core::{
     record::{Record, RecordValue, Recorder},
-    Env, ReplayBufferBase,
+    Env, ReplayBuffer,
 };
 use std::{
     marker::PhantomData,
@@ -17,7 +17,7 @@ use tensorboard_rs::summary_writer::SummaryWriter;
 pub struct TensorboardRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     model_dir: PathBuf,
     writer: SummaryWriter,
@@ -30,7 +30,7 @@ where
 impl<E, R> TensorboardRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// Construct a [`TensorboardRecorder`].
     ///
@@ -56,7 +56,7 @@ where
 impl<E, R> Recorder<E, R> for TensorboardRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// Writes a given [`Record`] into a TFRecord.
     ///

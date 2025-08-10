@@ -2,7 +2,7 @@ use crate::{AsyncTrainStat, AsyncTrainerConfig, PushedItemMessage, SyncModel};
 use anyhow::Result;
 use border_core::{
     record::{Record, RecordValue::Scalar, Recorder},
-    Agent, Configurable, Env, Evaluator, ExperienceBufferBase, ReplayBufferBase,
+    Agent, Configurable, Env, Evaluator, ExperienceBuffer, ReplayBuffer,
 };
 use crossbeam_channel::{Receiver, Sender};
 use log::{debug, info};
@@ -21,7 +21,7 @@ use std::{
 /// ```mermaid
 /// flowchart LR
 ///   subgraph ActorManager
-///     E[Actor]-->|ReplayBufferBase::PushedItem|H[ReplayBufferProxy]
+///     E[Actor]-->|ReplayBuffer::PushedItem|H[ReplayBufferProxy]
 ///     F[Actor]-->H
 ///     G[Actor]-->H
 ///   end
@@ -31,36 +31,36 @@ use std::{
 ///
 ///   subgraph I[AsyncTrainer]
 ///     H-->|PushedItemMessage|J[ReplayBuffer]
-///     J-->|ReplayBufferBase::Batch|K[Agent]
+///     J-->|ReplayBuffer::Batch|K[Agent]
 ///   end
 /// ```
 ///
 /// * The [`Agent`] in [`AsyncTrainer`] (left) is trained with batches
-///   of type [`ReplayBufferBase::Batch`], which are taken from the replay buffer.
+///   of type [`ReplayBuffer::Batch`], which are taken from the replay buffer.
 /// * The model parameters of the [`Agent`] in [`AsyncTrainer`] are wrapped in
 ///   [`SyncModel::ModelInfo`] and periodically sent to the [`Agent`]s in [`Actor`]s.
 ///   [`Agent`] must implement [`SyncModel`] to synchronize the model parameters.
 /// * In [`ActorManager`] (right), [`Actor`]s sample transitions, which have type
-///   [`ReplayBufferBase::Item`], and push the transitions into
+///   [`ReplayBuffer::Item`], and push the transitions into
 ///   [`ReplayBufferProxy`].
-/// * [`ReplayBufferProxy`] has a type parameter of [`ReplayBufferBase`] and the proxy accepts
-///   [`ReplayBufferBase::Item`].
+/// * [`ReplayBufferProxy`] has a type parameter of [`ReplayBuffer`] and the proxy accepts
+///   [`ReplayBuffer::Item`].
 /// * The proxy sends the transitions into the replay buffer in the [`AsyncTrainer`].
 ///
 /// [`ActorManager`]: crate::ActorManager
 /// [`Actor`]: crate::Actor
-/// [`ReplayBufferBase::Item`]: border_core::ReplayBufferBase::PushedItem
-/// [`ReplayBufferBase::Batch`]: border_core::ReplayBufferBase::PushedBatch
+/// [`ReplayBuffer::Item`]: border_core::ReplayBuffer::PushedItem
+/// [`ReplayBuffer::Batch`]: border_core::ReplayBuffer::PushedBatch
 /// [`ReplayBufferProxy`]: crate::ReplayBufferProxy
-/// [`ReplayBufferBase`]: border_core::ReplayBufferBase
+/// [`ReplayBuffer`]: border_core::ReplayBuffer
 /// [`SyncModel::ModelInfo`]: crate::SyncModel::ModelInfo
 /// [`Agent`]: border_core::Agent
 pub struct AsyncTrainer<A, E, R>
 where
     A: Agent<E, R> + Configurable + SyncModel,
     E: Env,
-    // R: ReplayBufferBase + Sync + Send + 'static,
-    R: ExperienceBufferBase + ReplayBufferBase,
+    // R: ReplayBuffer + Sync + Send + 'static,
+    R: ExperienceBuffer + ReplayBuffer,
     R::Item: Send + 'static,
 {
     /// Configuration of [`Env`]. Note that it is used only for evaluation, not for training.
@@ -130,8 +130,8 @@ impl<A, E, R> AsyncTrainer<A, E, R>
 where
     A: Agent<E, R> + Configurable + SyncModel + 'static,
     E: Env,
-    // R: ReplayBufferBase + Sync + Send + 'static,
-    R: ExperienceBufferBase + ReplayBufferBase,
+    // R: ReplayBuffer + Sync + Send + 'static,
+    R: ExperienceBuffer + ReplayBuffer,
     R::Item: Send + 'static,
 {
     /// Creates [`AsyncTrainer`].
@@ -231,7 +231,7 @@ where
     ) -> Result<()>
     where
         E: Env,
-        R: ReplayBufferBase,
+        R: ReplayBuffer,
         D: Evaluator<E>,
     {
         // Evaluation
@@ -288,14 +288,14 @@ where
     /// In the training loop, the following values will be pushed into the given recorder:
     ///
     /// * `samples_total` - Total number of samples pushed into the replay buffer.
-    ///   Here, a "sample" is an item in [`ExperienceBufferBase::Item`].
+    ///   Here, a "sample" is an item in [`ExperienceBuffer::Item`].
     /// * `opt_steps_per_sec` - The number of optimization steps per second.
     /// * `samples_per_sec` - The number of samples per second.
     /// * `samples_per_opt_steps` - The number of samples per optimization step.
     ///
     /// These values will typically be monitored with tensorboard.
     ///
-    /// [`ExperienceBufferBase::Item`]: border_core::ExperienceBufferBase::Item
+    /// [`ExperienceBuffer::Item`]: border_core::ExperienceBuffer::Item
     pub fn train<D>(
         &mut self,
         recorder: &mut Box<dyn Recorder<E, R>>,

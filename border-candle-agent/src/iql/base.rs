@@ -9,7 +9,7 @@ use crate::{
 use anyhow::Result;
 use border_core::{
     record::{Record, RecordValue},
-    Agent, Configurable, Env, Policy, ReplayBufferBase, TransitionBatch,
+    Agent, Configurable, Env, Policy, ReplayBuffer, TransitionBatch,
 };
 use candle_core::{Device, Tensor, D};
 use candle_nn::{loss::mse, ops::softmax};
@@ -59,7 +59,7 @@ where
     Q: SubModel2<Input1 = O, Input2 = A, Output = ActionValue>,
     P: SubModel1<Input = O, Output = (ActMean, ActStd)>,
     V: SubModel1<Input = O, Output = StateValue>,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
     E::Obs: Into<O>,
     E::Act: Into<A>,
     A: Clone,
@@ -259,7 +259,7 @@ where
     Q: SubModel2<Input1 = O, Input2 = A, Output = ActionValue> + 'static,
     P: SubModel1<Input = O, Output = (ActMean, ActStd)> + 'static,
     V: SubModel1<Input = O, Output = StateValue> + 'static,
-    R: ReplayBufferBase + 'static,
+    R: ReplayBuffer + 'static,
     E::Obs: Into<Q::Input1> + Into<P::Input>,
     E::Act: Into<Q::Input2> + From<Tensor>,
     O: 'static,

@@ -22,7 +22,7 @@ use anyhow::Result;
 ///     items: Vec<T>,
 /// }
 ///
-/// impl<T> ExperienceBufferBase for SimpleBuffer<T> {
+/// impl<T> ExperienceBuffer for SimpleBuffer<T> {
 ///     type Item = T;
 ///
 ///     fn push(&mut self, tr: T) -> Result<()> {
@@ -35,7 +35,7 @@ use anyhow::Result;
 ///     }
 /// }
 /// ```
-pub trait ExperienceBufferBase {
+pub trait ExperienceBuffer {
     /// The type of items stored in the buffer.
     ///
     /// This can be any type that represents an experience or transition
@@ -64,14 +64,14 @@ pub trait ExperienceBufferBase {
 /// Interface for replay buffers that generate batches for training.
 ///
 /// This trait provides functionality for sampling batches of experiences
-/// for training agents. It is independent of [`ExperienceBufferBase`] and
+/// for training agents. It is independent of [`ExperienceBuffer`] and
 /// focuses solely on the batch generation process.
 ///
 /// # Associated Types
 ///
 /// * `Config` - Configuration parameters for the buffer
 /// * `Batch` - The type of batch generated for training
-pub trait ReplayBufferBase {
+pub trait ReplayBuffer {
     /// Configuration parameters for the replay buffer.
     ///
     /// This type must implement `Clone` to support building multiple instances
@@ -131,7 +131,7 @@ pub trait ReplayBufferBase {
 /// This struct is used as a placeholder when a replay buffer is not needed.
 pub struct NullReplayBuffer;
 
-impl ReplayBufferBase for NullReplayBuffer {
+impl ReplayBuffer for NullReplayBuffer {
     type Batch = ();
     type Config = ();
 

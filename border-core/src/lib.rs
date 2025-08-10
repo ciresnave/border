@@ -23,13 +23,13 @@
 //!
 //! # Agent
 //!
-//! In this crate, an [`Agent<E: Env, R: ReplayBufferBase>`] is defined as a trainable [`Policy<E: Env>`].
+//! In this crate, an [`Agent<E: Env, R: ReplayBuffer>`] is defined as a trainable [`Policy<E: Env>`].
 //! Agents operate in either training or evaluation mode. During training, the agent's policy may be probabilistic
 //! to facilitate exploration, while in evaluation mode, it typically becomes deterministic.
 //!
 //! The [`Agent::opt()`] method executes a single optimization step. The specific implementation of an optimization
 //! step varies between agents and may include multiple stochastic gradient descent steps. Training samples are
-//! obtained from the [`ReplayBufferBase`].
+//! obtained from the [`ReplayBuffer`].
 //!
 //! This trait also provides methods for saving and loading trained policy parameters to and from a directory.
 //!
@@ -40,18 +40,18 @@
 //!
 //! # Replay Buffer and Experience Buffer
 //!
-//! The [`ReplayBufferBase`] trait provides an abstraction for replay buffers. Its associated type
-//! [`ReplayBufferBase::Batch`] represents samples used for training [`Agent`]s. Agents must implement the
-//! [`Agent::opt()`] method, where [`ReplayBufferBase::Batch`] must have appropriate type or trait bounds
+//! The [`ReplayBuffer`] trait provides an abstraction for replay buffers. Its associated type
+//! [`ReplayBuffer::Batch`] represents samples used for training [`Agent`]s. Agents must implement the
+//! [`Agent::opt()`] method, where [`ReplayBuffer::Batch`] must have appropriate type or trait bounds
 //! for training the agent.
 //!
-//! While [`ReplayBufferBase`] focuses on generating training batches, the [`ExperienceBufferBase`] trait
-//! handles sample storage. The [`ExperienceBufferBase::push()`] method stores samples of type
-//! [`ExperienceBufferBase::Item`], typically obtained through environment interactions.
+//! While [`ReplayBuffer`] focuses on generating training batches, the [`ExperienceBuffer`] trait
+//! handles sample storage. The [`ExperienceBuffer::push()`] method stores samples of type
+//! [`ExperienceBuffer::Item`], typically obtained through environment interactions.
 //!
 //! ## Reference Implementation
 //!
-//! [`SimpleReplayBuffer<O, A>`] implements both [`ReplayBufferBase`] and [`ExperienceBufferBase`].
+//! [`SimpleReplayBuffer<O, A>`] implements both [`ReplayBuffer`] and [`ExperienceBuffer`].
 //! This type takes two parameters, `O` and `A`, representing observation and action types in the replay buffer.
 //! Both `O` and `A` must implement [`BatchBase`], which provides sample storage functionality similar to `Vec<T>`.
 //! The associated types `Item` and `Batch` are both [`GenericTransitionBatch`], representing sets of
@@ -108,8 +108,8 @@ pub mod record;
 
 mod base;
 pub use base::{
-    Act, Agent, Configurable, Env, ExperienceBufferBase, Info, NullReplayBuffer, Obs, Policy,
-    ReplayBufferBase, Step, StepProcessor, TransitionBatch,
+    Act, Agent, Configurable, Env, ExperienceBuffer, Info, NullReplayBuffer, Obs, Policy,
+    ReplayBuffer, Step, StepProcessor, TransitionBatch,
 };
 
 mod trainer;

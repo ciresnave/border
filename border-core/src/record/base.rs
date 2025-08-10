@@ -106,7 +106,7 @@ impl Record {
     /// # Returns
     ///
     /// An iterator over the record's keys
-    pub fn keys(&self) -> Keys<String, RecordValue> {
+    pub fn keys(&self) -> Keys<'_, String, RecordValue> {
         self.0.keys()
     }
 

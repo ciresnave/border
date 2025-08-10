@@ -7,7 +7,7 @@
 use std::marker::PhantomData;
 
 use super::{Record, Recorder};
-use crate::{Env, ReplayBufferBase};
+use crate::{Env, ReplayBuffer};
 
 /// A recorder that discards all records without storing them.
 ///
@@ -22,11 +22,11 @@ use crate::{Env, ReplayBufferBase};
 /// # Type Parameters
 ///
 /// * `E` - The environment type that implements the [`Env`] trait
-/// * `R` - The replay buffer type that implements the [`ReplayBufferBase`] trait
+/// * `R` - The replay buffer type that implements the [`ReplayBuffer`] trait
 pub struct NullRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// Phantom data to hold the type parameters
     phantom: PhantomData<(E, R)>,
@@ -35,7 +35,7 @@ where
 impl<E, R> NullRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// Creates a new null recorder.
     ///
@@ -52,7 +52,7 @@ where
 impl<E, R> Recorder<E, R> for NullRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// Discards the given record without storing it.
     ///

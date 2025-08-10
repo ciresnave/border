@@ -21,22 +21,21 @@ standard experience replay and prioritized experience replay (PER).
 
 # [`BatchBase`]
 
+The [`BatchBase`] trait represents batches of observations and actions, serving dual purposes in the reinforcement learning pipeline:
+
+1. **Training Batch Component**: Forms the building blocks for training batches used by agents during optimization
+2. **Storage Container**: Acts as the internal storage mechanism within [`GenericReplayBuffer`] for efficiently managing observation and action data
+
 # [`GenericTransitionBatch`]
 
-The [`TransitionBatch`] trait represents a batch of transitions in the form `(o_t, r_t, a_t, o_t+1)`.
-This trait is used for training [`Agent`]s using reinforcement learning algorithms.
-
-# [`GenericReplayBuffer`]
-
-[`GenericReplayBuffer<O, A>`] implements both [`ReplayBuffer`] and [`ExperienceBuffer`].
-This type takes two parameters, `O` and `A`, representing observation and action types in the replay buffer.
-Both `O` and `A` must implement [`BatchBase`], which provides sample storage functionality similar to `Vec<T>`.
-The associated types `Item` and `Batch` are both [`GenericTransitionBatch`], representing sets of
-`(o_t, r_t, a_t, o_t+1)` transitions.
+The [`GenericTransitionBatch`] trait represents a batch of transitions in the form `(o_t, r_t, a_t, o_t+1)`.
+This is composed of structs that implement the [`BatchBase`] trait and
+used for training [`Agent`]s using reinforcement learning algorithms.
 
 # [`SimpleStepProcessor`]
 
-The [`SimpleStepProcessor<E, O, A>`] is a concrete implementation that:
+The [`SimpleStepProcessor<E, O, A>`] is an implementation of [`StepProcessor`] that:
+
 1. Maintains the previous observation to construct complete transitions
 2. Converts environment-specific observations and actions (`E::Obs` and `E::Act`) into batch-compatible
    types (`O` and `A`) using the `From` trait
@@ -51,6 +50,18 @@ that transitions are properly formatted and stored in the replay buffer for trai
 `E::Act` into their respective [`BatchBase`] types and generates [`GenericTransitionBatch`]. This conversion
 relies on the trait bounds `O: From<E::Obs>` and `A: From<E::Act>`.
 
+# [`GenericReplayBuffer`]
+
+[`GenericReplayBuffer<O, A>`] implements both [`ReplayBuffer`] and [`ExperienceBuffer`].
+This type takes two parameters, `O` and `A`, representing observation and action types in the replay buffer.
+Both `O` and `A` must implement [`BatchBase`], which provides sample storage functionality similar to `Vec<T>`.
+The associated types `Item` and `Batch` are both [`GenericTransitionBatch`], representing sets of
+`(o_t, r_t, a_t, o_t+1)` transitions.
+
+## Type Compatibility
+
+Typically, the associated types `SimpleStepProcessor::Output` and `GenericReplayBuffer::Item` need to be matched. This ensures that the step data from environment interactions matches the samples expected by the replay buffer, guaranteeing type compatibility throughout the reinforcement learning pipeline.
+
 [`GenericReplayBuffer`]: crate::GenericReplayBuffer
 [`GenericReplayBuffer<O, A>`]: crate::GenericReplayBuffer
 [`BatchBase`]: crate::BatchBase
@@ -61,3 +72,4 @@ relies on the trait bounds `O: From<E::Obs>` and `A: From<E::Act>`.
 [`ReplayBuffer`]: border_core::ReplayBuffer
 [`ExperienceBuffer`]: border_core::ExperienceBuffer
 [`Agent`]: border_core::Agent
+[`StepProcessor`]: border_core::StepProcessor

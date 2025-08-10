@@ -24,4 +24,5 @@ thiserror = { workspace = true }
 
 [dev-dependencies]
 env_logger = { workspace = true }
+border-generic-replay-buffer = { version = "0.0.9", path = "../border-generic-replay-buffer" }
 test-log = "0.2.8"

@@ -19,7 +19,6 @@
 //! - Configurable weight normalization
 //! - Step processing for non-vectorized environments
 
-// mod base;
 mod batch;
 mod config;
 mod iw_scheduler;

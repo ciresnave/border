@@ -11,6 +11,7 @@ Border consists of the following crates:
 
 * Core and utility
   * [border-core](https://crates.io/crates/border-core) ([doc](https://docs.rs/border-core/latest/border_core/)) provides basic traits and functions for environments and reinforcement learning (RL) agents.
+  * [border-generic-replay-buffer](https://crates.io/crates/border-generic-replay-buffer) ([doc](https://docs.rs/border-generic-replay-buffer/latest/border_generic_replay_buffer/)) provides a generic implementation of replay buffer.
   * [border-tensorboard](https://crates.io/crates/border-tensorboard) ([doc](https://docs.rs/border-core/latest/border_tensorboard/)) implements the `TensorboardRecorder` struct for writing records that can be visualized in Tensorboard, based on [tensorboard-rs](https://crates.io/crates/tensorboard-rs).
   * [border-mlflow-tracking](https://crates.io/crates/border-mlflow-tracking) ([doc](https://docs.rs/border-core/latest/border_mlflow_tracking/)) provides MLflow tracking support for logging metrics during training via REST API.
   * [border-async-trainer](https://crates.io/crates/border-async-trainer) ([doc](https://docs.rs/border-core/latest/border_async_trainer/)) defines traits and functions for asynchronous training of RL agents using multiple actors. Each actor runs a sampling process in parallel, where an agent interacts with an environment to collect samples for a shared replay buffer.

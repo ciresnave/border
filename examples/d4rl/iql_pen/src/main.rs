@@ -10,11 +10,10 @@ use border_candle_agent::{
     Activation,
 };
 use border_core::{
-    generic_replay_buffer::{BatchBase, SimpleReplayBuffer},
-    record::Recorder,
-    Agent, Configurable, Env, Evaluator, ExperienceBuffer, ReplayBuffer, Trainer,
+    record::Recorder, Agent, Configurable, Env, Evaluator, ExperienceBuffer, ReplayBuffer, Trainer,
     TrainerConfig, TransitionBatch,
 };
+use border_generic_replay_buffer::{BatchBase, SimpleReplayBuffer};
 use border_minari::{
     d4rl::pen::candle::{PenConverter, PenConverterConfig},
     MinariConverter, MinariDataset, MinariEnv, MinariEvaluator,
@@ -209,7 +208,7 @@ where
 fn create_replay_buffer<T>(
     converter: &mut T,
     dataset: &MinariDataset,
-) -> Result<SimpleReplayBuffer<T::ObsBatch, T::ActBatch>>
+) -> Result<GenericReplayBuffer<T::ObsBatch, T::ActBatch>>
 where
     T: MinariConverter,
     T::ObsBatch: BatchBase + Debug + Into<Tensor>,
@@ -239,7 +238,7 @@ where
         let model_dir = format!("{}/{}", MODEL_DIR, config.args.env);
         Ok(Box::new(TensorboardRecorder::new(
             &model_dir, &model_dir, false,
-       )))
+        )))
     }
 }
 
@@ -291,7 +290,7 @@ where
     T::ObsBatch: std::fmt::Debug + Into<Tensor> + 'static + Clone,
     T::ActBatch: std::fmt::Debug + Into<Tensor> + 'static + Clone,
 {
-    let mut agent: Box<dyn Agent<MinariEnv<T>, SimpleReplayBuffer<T::ObsBatch, T::ActBatch>>> =
+    let mut agent: Box<dyn Agent<MinariEnv<T>, GenericReplayBuffer<T::ObsBatch, T::ActBatch>>> =
         create_agent(&config);
     let recorder = create_recorder(&config)?; // used for loading a trained model
     let mut evaluator = create_evaluator(&config.args, converter, &dataset, true)?;

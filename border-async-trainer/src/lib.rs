@@ -4,7 +4,7 @@
 //!
 //! ```
 //! # use serde::{Deserialize, Serialize};
-//! # use border_core::test::{
+//! # use border_generic_replay_buffer::test::{
 //! #     TestAgent, TestAgentConfig, TestEnv, TestObs, TestObsBatch,
 //! #     TestAct, TestActBatch
 //! # };
@@ -13,11 +13,11 @@
 //! #     //test::{TestAgent, TestAgentConfig, TestEnv},
 //! #     ActorManager, ActorManagerConfig, AsyncTrainer, AsyncTrainerConfig,
 //! # };
+//! # use border_generic_replay_buffer::{
+//! #     GenericReplayBuffer, GenericReplayBufferConfig,
+//! #     SimpleStepProcessorConfig, SimpleStepProcessor
+//! # };
 //! # use border_core::{
-//! #     generic_replay_buffer::{
-//! #         SimpleReplayBuffer, SimpleReplayBufferConfig,
-//! #         SimpleStepProcessorConfig, SimpleStepProcessor
-//! #     },
 //! #     record::{Recorder, NullRecorder}, DefaultEvaluator,
 //! # };
 //! #
@@ -34,7 +34,7 @@
 //! type Env = TestEnv;
 //! type ObsBatch = TestObsBatch;
 //! type ActBatch = TestActBatch;
-//! type ReplayBuffer = SimpleReplayBuffer<ObsBatch, ActBatch>;
+//! type ReplayBuffer = GenericReplayBuffer<ObsBatch, ActBatch>;
 //! type StepProcessor = SimpleStepProcessor<Env, ObsBatch, ActBatch>;
 //!
 //! // Create a new agent by wrapping the existing agent in order to implement SyncModel.
@@ -115,7 +115,7 @@
 //! let agent_configs: Vec<_> = vec![agent_config()];
 //! let env_config_train = env_config();
 //! let env_config_eval = env_config();
-//! let replay_buffer_config = SimpleReplayBufferConfig::default();
+//! let replay_buffer_config = GenericReplayBufferConfig::default();
 //! let step_proc_config = SimpleStepProcessorConfig::default();
 //! let actor_man_config = ActorManagerConfig::default();
 //! let async_trainer_config = AsyncTrainerConfig::default();
@@ -198,7 +198,7 @@ pub mod test {
         obs: Vec<usize>,
     }
 
-    impl border_core::generic_replay_buffer::BatchBase for TestObsBatch {
+    impl border_generic_replay_buffer::BatchBase for TestObsBatch {
         fn new(capacity: usize) -> Self {
             Self {
                 obs: vec![0; capacity],
@@ -240,7 +240,7 @@ pub mod test {
         }
     }
 
-    impl border_core::generic_replay_buffer::BatchBase for TestActBatch {
+    impl border_generic_replay_buffer::BatchBase for TestActBatch {
         fn new(capacity: usize) -> Self {
             Self {
                 act: vec![0; capacity],
@@ -337,7 +337,7 @@ pub mod test {
     }
 
     type ReplayBuffer =
-        border_core::generic_replay_buffer::SimpleReplayBuffer<TestObsBatch, TestActBatch>;
+        border_generic_replay_buffer::GenericReplayBuffer<TestObsBatch, TestActBatch>;
 
     /// Agent for testing.
     pub struct TestAgent {}

@@ -1,8 +1,8 @@
 use crate::{util, MinariConverter, MinariEnv};
 use anyhow::Result;
-use border_core::{
-    generic_replay_buffer::{GenericTransitionBatch, SimpleReplayBuffer, SimpleReplayBufferConfig},
-    ExperienceBuffer, ReplayBuffer,
+use border_core::{ExperienceBuffer, ReplayBuffer};
+use border_generic_replay_buffer::{
+    GenericTransitionBatch, GenericReplayBuffer, GenericReplayBufferConfig,
 };
 use pyo3::{
     types::{IntoPyDict, PyIterator},
@@ -65,7 +65,7 @@ impl MinariDataset {
         &self,
         converter: &mut T,
         episode_indices: Option<Vec<usize>>,
-    ) -> Result<SimpleReplayBuffer<T::ObsBatch, T::ActBatch>>
+    ) -> Result<GenericReplayBuffer<T::ObsBatch, T::ActBatch>>
     where
         T::ObsBatch: std::fmt::Debug,
         T::ActBatch: std::fmt::Debug,
@@ -75,7 +75,7 @@ impl MinariDataset {
             let num_transitions = self.get_num_transitions(episode_indices.clone())?;
 
             // Prepare replay buffer
-            let mut replay_buffer = SimpleReplayBuffer::build(&SimpleReplayBufferConfig {
+            let mut replay_buffer = GenericReplayBuffer::build(&GenericReplayBufferConfig {
                 capacity: num_transitions,
                 seed: 0,
                 per_config: None,

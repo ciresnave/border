@@ -11,6 +11,7 @@ readme = "README.md"
 
 [dependencies]
 border-core = { version = "0.0.9", path = "../border-core" }
+border-generic-replay-buffer = { version = "0.0.9", path = "../border-generic-replay-buffer", optional = true }
 numpy = { workspace = true }
 pyo3 = { workspace = true, default-features = false, features = [
     "auto-initialize",
@@ -42,4 +43,5 @@ features = ["candle"]
 no-default-features = true
 
 [features]
-candle = [ "candle-core" ]
+candle = [ "candle-core", "border-generic-replay-buffer" ]
+tch = ["dep:tch", "border-generic-replay-buffer"]

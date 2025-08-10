@@ -5,15 +5,15 @@
 //! ```no_run
 //! # use anyhow::Result;
 //! use border_core::{
-//! #     Env as Env_, Obs as Obs_, Act as Act_, Step, test::{
+//! #     Env as Env_, Obs as Obs_, Act as Act_, Step,
+//! #     record::Record,
+//!       Configurable,
+//! };
+//! use border_generic_replay_buffer::{GenericReplayBuffer, BatchBase, test::{
 //! #         TestAct as TestAct_, TestActBatch as TestActBatch_,
 //! #         TestEnv as TestEnv_,
 //! #         TestObs as TestObs_, TestObsBatch as TestObsBatch_,
-//! #     },
-//! #     record::Record,
-//! #     generic_replay_buffer::{SimpleReplayBuffer, BatchBase},
-//!       Configurable,
-//! };
+//! #     }};
 //! use border_tch_agent::{
 //!     sac::{ActorConfig, CriticConfig, Sac, SacConfig},
 //!     mlp::{Mlp, Mlp2, MlpConfig},
@@ -136,7 +136,7 @@
 //! # type Env = TestEnv;
 //! # type ObsBatch = TestObsBatch;
 //! # type ActBatch = TestActBatch;
-//! # type ReplayBuffer = SimpleReplayBuffer<ObsBatch, ActBatch>;
+//! # type ReplayBuffer = GenericReplayBuffer<ObsBatch, ActBatch>;
 //! #
 //! const DIM_OBS: i64 = 3;
 //! const DIM_ACT: i64 = 1;

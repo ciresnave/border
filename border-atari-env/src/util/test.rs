@@ -5,10 +5,10 @@ use crate::{
 };
 use anyhow::Result;
 use border_core::{
-    generic_replay_buffer::{BatchBase, SimpleReplayBuffer},
     record::Record,
     Agent as Agent_, Configurable, Policy, ReplayBuffer as ReplayBuffer_,
 };
+use border_generic_replay_buffer::{BatchBase, GenericReplayBuffer};
 use serde::Deserialize;
 use std::ptr::copy;
 
@@ -17,7 +17,7 @@ pub type Act = BorderAtariAct;
 pub type ObsFilter = BorderAtariObsRawFilter<Obs>;
 pub type ActFilter = BorderAtariActRawFilter<Act>;
 pub type EnvConfig = BorderAtariEnvConfig<Obs, Act, ObsFilter, ActFilter>;
-pub type ReplayBuffer = SimpleReplayBuffer<ObsBatch, ActBatch>;
+pub type ReplayBuffer = GenericReplayBuffer<ObsBatch, ActBatch>;
 pub type Env = BorderAtariEnv<Obs, Act, ObsFilter, ActFilter>;
 pub type Agent = RandomAgent;
 

@@ -32,7 +32,7 @@ use std::{
 /// # Examples
 ///
 /// ```rust
-/// use border_core::generic_replay_buffer::{PerConfig, WeightNormalizer};
+/// use border_generic_replay_buffer::{PerConfig, WeightNormalizer};
 ///
 /// let config = PerConfig::default()
 ///     .alpha(0.6)

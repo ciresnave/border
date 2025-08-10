@@ -8,7 +8,7 @@
 //! - Efficient batch processing
 
 use super::{BatchBase, GenericTransitionBatch};
-use border_core::{Env, Obs, StepProcessor, Step};
+use border_core::{Env, Obs, Step, StepProcessor};
 use std::{default::Default, marker::PhantomData};
 
 /// Configuration for the simple step processor.

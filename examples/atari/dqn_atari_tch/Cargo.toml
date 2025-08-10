@@ -2,7 +2,7 @@
 name = "dqn_atari_tch"
 version = "0.1.0"
 edition = "2018"
-rust-version = "1.84"
+rust-version = "1.85"
 
 [dependencies]
 log = "0.4"
@@ -11,11 +11,11 @@ clap = { version = "4.5.8", features = ["derive"] }
 env_logger = "0.8.2"
 numpy = "0.14.1"
 tch = { version = "0.16.1" }
-border-tch-agent = { version = "0.0.8", path = "../../../border-tch-agent" }
-border-core = { version = "0.0.8", path = "../../../border-core" }
-border-tensorboard = { version = "0.0.8", path = "../../../border-tensorboard" }
-border-mlflow-tracking = { version = "0.0.8", path = "../../../border-mlflow-tracking" }
-border-atari-env = { version = "0.0.8", path = "../../../border-atari-env", features = ["tch"]}
+border-tch-agent = { version = "0.0.9", path = "../../../border-tch-agent" }
+border-core = { version = "0.0.9", path = "../../../border-core" }
+border-tensorboard = { version = "0.0.9", path = "../../../border-tensorboard" }
+border-mlflow-tracking = { version = "0.0.9", path = "../../../border-mlflow-tracking" }
+border-atari-env = { version = "0.0.9", path = "../../../border-atari-env", features = ["tch"]}
 serde = "1.0.194"
 serde_yaml = "0.8.7"
 

@@ -23,7 +23,7 @@ pub type Agent = RandomAgent;
 
 const FRAME_IN_BYTES: usize = 84 * 84;
 
-/// Consists the observation part of a batch in [SimpleReplayBuffer].
+/// Consists the observation part of a batch in [`GenericReplayBuffer`].
 pub struct ObsBatch {
     /// The number of samples in the batch.
     pub n: usize,
@@ -78,7 +78,7 @@ impl From<Obs> for ObsBatch {
     }
 }
 
-/// Consists the action part of a batch in [SimpleReplayBuffer].
+/// Consists the action part of a batch in [`GenericReplayBuffer`].
 pub struct ActBatch {
     /// The number of samples in the batch.
     pub n: usize,

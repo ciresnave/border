@@ -1,4 +1,4 @@
-//! Policy with no backend.
+#![doc = include_str!("../README.md")]
 mod mat;
 mod mlp;
 

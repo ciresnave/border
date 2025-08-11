@@ -17,6 +17,13 @@ impl Into<tch::Tensor> for DummyObs {
     }
 }
 
+#[cfg(feature = "candle")]
+impl Into<candle_core::Tensor> for DummyObs {
+    fn into(self) -> candle_core::Tensor {
+        unimplemented!();
+    }
+}
+
 #[derive(Clone, Debug)]
 /// Dummy action.
 pub struct DummyAct;
@@ -41,6 +48,20 @@ impl From<tch::Tensor> for DummyAct {
     }
 }
 
+#[cfg(feature = "candle")]
+impl Into<candle_core::Tensor> for DummyAct {
+    fn into(self) -> candle_core::Tensor {
+        unimplemented!();
+    }
+}
+
+#[cfg(feature = "candle")]
+impl From<candle_core::Tensor> for DummyAct {
+    fn from(_value: candle_core::Tensor) -> Self {
+        unimplemented!();
+    }
+}
+
 #[derive(Clone)]
 /// Dummy inner batch.
 pub struct DummyInnerBatch;
@@ -48,6 +69,13 @@ pub struct DummyInnerBatch;
 #[cfg(feature = "tch")]
 impl Into<tch::Tensor> for DummyInnerBatch {
     fn into(self) -> tch::Tensor {
+        unimplemented!();
+    }
+}
+
+#[cfg(feature = "candle")]
+impl Into<candle_core::Tensor> for DummyInnerBatch {
+    fn into(self) -> candle_core::Tensor {
         unimplemented!();
     }
 }

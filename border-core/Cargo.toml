@@ -21,6 +21,7 @@ fastrand = { workspace = true }
 segment-tree = { workspace = true }
 xxhash-rust = { workspace = true }
 tch = { workspace = true, optional = true }
+candle-core = { workspace = true, optional = true }
 # Consider to replace with fastrand
 rand = { workspace = true }
 
@@ -29,3 +30,4 @@ tempdir = { workspace = true }
 
 [features]
 tch = ["dep:tch"]
+candle = ["dep:candle-core"]

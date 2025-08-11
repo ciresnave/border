@@ -8,7 +8,7 @@
 //! - Monitor training progress
 //! - Validate the generalization of learned policies
 
-use crate::{record::Record, Agent, Env, ReplayBufferBase};
+use crate::{record::Record, Agent, Env, ReplayBuffer};
 use anyhow::Result;
 mod default_evaluator;
 pub use default_evaluator::DefaultEvaluator;
@@ -36,7 +36,7 @@ pub use default_evaluator::DefaultEvaluator;
 /// impl<E: Env> Evaluator<E> for CustomEvaluator<E> {
 ///     fn evaluate<R>(&mut self, agent: &mut Box<dyn Agent<E, R>>) -> Result<Record>
 ///     where
-///         R: ReplayBufferBase,
+///         R: ReplayBuffer,
 ///     {
 ///         // Custom evaluation logic
 ///         // ...
@@ -79,5 +79,5 @@ pub trait Evaluator<E: Env> {
     /// [`Trainer`]: crate::Trainer
     fn evaluate<R>(&mut self, agent: &mut Box<dyn Agent<E, R>>) -> Result<(f32, Record)>
     where
-        R: ReplayBufferBase;
+        R: ReplayBuffer;
 }

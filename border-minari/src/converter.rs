@@ -1,5 +1,6 @@
 use anyhow::Result;
-use border_core::{generic_replay_buffer::BatchBase, Act, Obs};
+use border_core::{Act, Obs};
+use border_generic_replay_buffer::BatchBase;
 use pyo3::{PyAny, PyObject, Python};
 
 /// Conversion trait for observation and action.

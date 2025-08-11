@@ -4,7 +4,7 @@ use crate::{model::SubModel1, util::OutDim};
 use anyhow::Result;
 use border_core::{
     record::{Record, RecordValue},
-    Agent, Configurable, Env, Policy, ReplayBufferBase, TransitionBatch,
+    Agent, Configurable, Env, Policy, ReplayBuffer, TransitionBatch,
 };
 use candle_core::{shape::D, DType, Device, Tensor};
 use candle_nn::loss::mse;
@@ -92,7 +92,7 @@ impl<E, P, R> Agent<E, R> for Bc<E, P, R>
 where
     E: Env,
     P: SubModel1<Output = Tensor>,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
     E::Obs: Into<P::Input>,
     E::Act: From<P::Output>,
     P::Config: DeserializeOwned + Serialize + OutDim + std::fmt::Debug + PartialEq + Clone,
@@ -157,7 +157,7 @@ impl<E, P, R> Bc<E, P, R>
 where
     E: Env,
     P: SubModel1<Output = Tensor>,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
     P::Config: DeserializeOwned + Serialize + OutDim + std::fmt::Debug + PartialEq + Clone,
     R::Batch: TransitionBatch,
     <R::Batch as TransitionBatch>::ObsBatch: Into<P::Input>,

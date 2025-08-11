@@ -10,7 +10,7 @@ use std::time::{Duration, SystemTime};
 
 use crate::{
     record::{Record, RecordValue::Scalar, Recorder},
-    Agent, Env, Evaluator, ExperienceBufferBase, ReplayBufferBase, StepProcessor,
+    Agent, Env, Evaluator, ExperienceBuffer, ReplayBuffer, StepProcessor,
 };
 use anyhow::Result;
 pub use config::TrainerConfig;
@@ -201,7 +201,7 @@ impl Trainer {
     ) -> Result<(Record, bool)>
     where
         E: Env,
-        R: ReplayBufferBase,
+        R: ReplayBuffer,
     {
         if self.env_steps < self.warmup_period {
             Ok((Record::empty(), false))
@@ -237,7 +237,7 @@ impl Trainer {
     ) -> Result<()>
     where
         E: Env,
-        R: ReplayBufferBase,
+        R: ReplayBuffer,
         D: Evaluator<E>,
     {
         // Evaluation
@@ -276,7 +276,7 @@ impl Trainer {
     where
         E: Env,
         P: StepProcessor<E>,
-        R: ExperienceBufferBase<Item = P::Output> + ReplayBufferBase,
+        R: ExperienceBuffer<Item = P::Output> + ReplayBuffer,
         D: Evaluator<E>,
     {
         let mut sampler = Sampler::new(env, step_proc);
@@ -336,7 +336,7 @@ impl Trainer {
     ) -> Result<()>
     where
         E: Env,
-        R: ReplayBufferBase,
+        R: ReplayBuffer,
         D: Evaluator<E>,
     {
         // Return empty record

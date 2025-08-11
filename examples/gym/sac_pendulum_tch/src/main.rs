@@ -1,13 +1,12 @@
 use anyhow::Result;
 use border_core::{
-    generic_replay_buffer::{
-        SimpleReplayBuffer, SimpleReplayBufferConfig, SimpleStepProcessor,
-        SimpleStepProcessorConfig,
-    },
-    record::Recorder,
-    Agent, Configurable, DefaultEvaluator, Env as _, Evaluator as _, ReplayBufferBase,
-    StepProcessor, Trainer, TrainerConfig,
+    record::Recorder, Agent, Configurable, DefaultEvaluator, Env as _, Evaluator as _,
+    ReplayBuffer as _, StepProcessor, Trainer, TrainerConfig,
 };
+use border_generic_replay_buffer::{
+    GenericReplayBuffer, GenericReplayBufferConfig, SimpleStepProcessor, SimpleStepProcessorConfig,
+};
+
 use border_mlflow_tracking::MlflowTrackingClient;
 use border_py_gym_env::{
     tch::{NdarrayConverter, NdarrayConverterConfig, TensorBatch},
@@ -24,7 +23,7 @@ use serde::Serialize;
 use tch::Device;
 
 type Env = GymEnv<NdarrayConverter>;
-type ReplayBuffer = SimpleReplayBuffer<TensorBatch, TensorBatch>;
+type ReplayBuffer = GenericReplayBuffer<TensorBatch, TensorBatch>;
 type StepProc = SimpleStepProcessor<Env, TensorBatch, TensorBatch>;
 type Evaluator = DefaultEvaluator<Env>;
 
@@ -153,7 +152,7 @@ impl SacPendulumConfig {
 fn train(args: &Args, max_opts: usize, model_dir: &str, eval_interval: usize) -> Result<()> {
     let config = SacPendulumConfig::new(DIM_OBS, DIM_ACT, max_opts, eval_interval)?;
     let step_proc_config = SimpleStepProcessorConfig {};
-    let replay_buffer_config = SimpleReplayBufferConfig::default().capacity(REPLAY_BUFFER_CAPACITY);
+    let replay_buffer_config = GenericReplayBufferConfig::default().capacity(REPLAY_BUFFER_CAPACITY);
     let mut recorder = create_recorder(&args, model_dir, Some(&config))?;
     let mut trainer = Trainer::build(config.trainer_config.clone());
 

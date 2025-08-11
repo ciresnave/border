@@ -101,7 +101,7 @@ mod dummy {
 
     pub struct DummyReplayBuffer;
 
-    impl border_core::ReplayBufferBase for DummyReplayBuffer {
+    impl border_core::ReplayBuffer for DummyReplayBuffer {
         type Batch = DummyBatch;
         type Config = usize;
 

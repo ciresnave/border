@@ -6,7 +6,7 @@ use crate::{
 use anyhow::Result;
 use border_core::{
     record::{Record, RecordValue},
-    Agent, Configurable, Env, Policy, ReplayBufferBase, TransitionBatch,
+    Agent, Configurable, Env, Policy, ReplayBuffer, TransitionBatch,
 };
 use serde::{de::DeserializeOwned, Serialize};
 // use log::info;
@@ -60,7 +60,7 @@ where
     E: Env,
     Q: SubModel2<Output = ActionValue>,
     P: SubModel<Output = (ActMean, ActStd)>,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
     E::Obs: Into<Q::Input1> + Into<P::Input>,
     E::Act: Into<Q::Input2>,
     Q::Input2: From<ActMean>,
@@ -284,7 +284,7 @@ where
     E: Env + 'static,
     Q: SubModel2<Output = ActionValue> + 'static,
     P: SubModel<Output = (ActMean, ActStd)> + 'static,
-    R: ReplayBufferBase + 'static,
+    R: ReplayBuffer + 'static,
     E::Obs: Into<Q::Input1> + Into<P::Input>,
     E::Act: Into<Q::Input2> + From<Tensor>,
     Q::Input2: From<ActMean>,
@@ -362,7 +362,7 @@ where
     E: Env,
     Q: SubModel2<Output = ActionValue>,
     P: SubModel<Output = (ActMean, ActStd)>,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
     E::Obs: Into<Q::Input1> + Into<P::Input>,
     E::Act: Into<Q::Input2> + From<Tensor>,
     Q::Input2: From<ActMean>,

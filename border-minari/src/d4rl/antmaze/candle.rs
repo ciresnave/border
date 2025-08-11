@@ -4,7 +4,7 @@ use crate::{
     MinariConverter, MinariDataset,
 };
 use anyhow::Result;
-use border_core::generic_replay_buffer::BatchBase;
+use border_generic_replay_buffer::BatchBase;
 use candle_core::{DType, Device, Tensor};
 use ndarray::{ArrayBase, ArrayD, Axis, Slice};
 use pyo3::{types::PyIterator, PyAny, PyObject, Python};

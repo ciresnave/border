@@ -2,6 +2,10 @@
 
 ## v0.0.9 (2025-??-??)
 
+### Changed
+
+* Separate the generic replaybuffer into a separate crate (`border-generic-replay-buffer`).
+
 ## v0.0.8 (2025-05-17)
 
 ### Added

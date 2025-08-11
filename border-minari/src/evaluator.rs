@@ -1,7 +1,7 @@
 //! Evaluator for Minari environments.
 use crate::{MinariConverter, MinariEnv};
 use anyhow::Result;
-use border_core::{record::Record, Agent, Env, Evaluator, ReplayBufferBase};
+use border_core::{record::Record, Agent, Env, Evaluator, ReplayBuffer};
 
 /// An evaluator for Minari environments.
 ///
@@ -22,7 +22,7 @@ impl<T: MinariConverter> Evaluator<MinariEnv<T>> for MinariEvaluator<T> {
     /// The average return over episodes is returned.
     /// If the environment has ref_min_score and ref_max_score, the normalized score is also returned
     /// in the record.
-    fn evaluate<R: ReplayBufferBase>(
+    fn evaluate<R: ReplayBuffer>(
         &mut self,
         policy: &mut Box<dyn Agent<MinariEnv<T>, R>>,
     ) -> Result<(f32, Record)> {

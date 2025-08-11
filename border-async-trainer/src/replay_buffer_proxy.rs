@@ -1,6 +1,6 @@
 use crate::PushedItemMessage;
 use anyhow::Result;
-use border_core::{ExperienceBufferBase, ReplayBufferBase};
+use border_core::{ExperienceBuffer, ReplayBuffer};
 use crossbeam_channel::Sender;
 use std::marker::PhantomData;
 
@@ -14,7 +14,7 @@ pub struct ReplayBufferProxyConfig {
 }
 
 /// A wrapper of replay buffer for asynchronous trainer.
-pub struct ReplayBufferProxy<R: ExperienceBufferBase> {
+pub struct ReplayBufferProxy<R: ExperienceBuffer> {
     id: usize,
 
     /// Sender of [PushedItemMessage].
@@ -29,7 +29,7 @@ pub struct ReplayBufferProxy<R: ExperienceBufferBase> {
     phantom: PhantomData<R>,
 }
 
-impl<R: ExperienceBufferBase> ReplayBufferProxy<R> {
+impl<R: ExperienceBuffer> ReplayBufferProxy<R> {
     pub fn build_with_sender(
         id: usize,
         config: &ReplayBufferProxyConfig,
@@ -46,7 +46,7 @@ impl<R: ExperienceBufferBase> ReplayBufferProxy<R> {
     }
 }
 
-impl<R: ExperienceBufferBase> ExperienceBufferBase for ReplayBufferProxy<R> {
+impl<R: ExperienceBuffer> ExperienceBuffer for ReplayBufferProxy<R> {
     type Item = R::Item;
 
     fn push(&mut self, tr: Self::Item) -> Result<()> {
@@ -76,7 +76,7 @@ impl<R: ExperienceBufferBase> ExperienceBufferBase for ReplayBufferProxy<R> {
     }
 }
 
-impl<R: ExperienceBufferBase + ReplayBufferBase> ReplayBufferBase for ReplayBufferProxy<R> {
+impl<R: ExperienceBuffer + ReplayBuffer> ReplayBuffer for ReplayBufferProxy<R> {
     type Config = ReplayBufferProxyConfig;
     type Batch = R::Batch;
 

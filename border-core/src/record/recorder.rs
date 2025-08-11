@@ -6,7 +6,7 @@
 //! recording strategies.
 
 use super::Record;
-use crate::{Agent, Env, ReplayBufferBase};
+use crate::{Agent, Env, ReplayBuffer};
 use anyhow::Result;
 use std::path::Path;
 
@@ -22,11 +22,11 @@ use std::path::Path;
 /// # Type Parameters
 ///
 /// * `E` - The environment type that implements the [`Env`] trait
-/// * `R` - The replay buffer type that implements the [`ReplayBufferBase`] trait
+/// * `R` - The replay buffer type that implements the [`ReplayBuffer`] trait
 pub trait Recorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// Writes a record to the recorder's output destination.
     ///

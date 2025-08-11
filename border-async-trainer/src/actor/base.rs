@@ -1,6 +1,6 @@
 use crate::{ActorStat, PushedItemMessage, ReplayBufferProxy, ReplayBufferProxyConfig, SyncModel};
 use border_core::{
-    Agent, Configurable, Env, ExperienceBufferBase, ReplayBufferBase, Sampler, StepProcessor,
+    Agent, Configurable, Env, ExperienceBuffer, ReplayBuffer, Sampler, StepProcessor,
 };
 use crossbeam_channel::Sender;
 use log::{debug, info};
@@ -21,7 +21,7 @@ use std::{
 ///     B-->|Env::Obs|A
 ///     B-->|Step&ltE: Env&gt|C[StepProcessor]
 ///   end
-///   C-->|ReplayBufferBase::PushedItem|F[ReplayBufferProxy]
+///   C-->|ReplayBuffer::PushedItem|F[ReplayBufferProxy]
 /// ```
 ///
 /// In [`Actor`], an [`Agent`] runs on an [`Env`] and generates [`Step`] objects.
@@ -41,7 +41,7 @@ where
     A: Agent<E, R> + Configurable + SyncModel + 'static,
     E: Env,
     P: StepProcessor<E>,
-    R: ExperienceBufferBase<Item = P::Output> + ReplayBufferBase,
+    R: ExperienceBuffer<Item = P::Output> + ReplayBuffer,
 {
     /// Stops sampling process if this field is set to `true`.
     id: usize,
@@ -60,7 +60,7 @@ where
     A: Agent<E, R> + Configurable + SyncModel + 'static,
     E: Env,
     P: StepProcessor<E>,
-    R: ExperienceBufferBase<Item = P::Output> + ReplayBufferBase,
+    R: ExperienceBuffer<Item = P::Output> + ReplayBuffer,
 {
     pub fn build(
         id: usize,

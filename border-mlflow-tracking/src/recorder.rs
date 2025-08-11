@@ -2,7 +2,7 @@ use crate::{system_time_as_millis, Run};
 use anyhow::Result;
 use border_core::{
     record::{RecordStorage, RecordValue, Recorder},
-    Agent, Env, ReplayBufferBase,
+    Agent, Env, ReplayBuffer,
 };
 use chrono::{DateTime, Duration, Local, SecondsFormat};
 use reqwest::blocking::Client;
@@ -64,7 +64,7 @@ struct SetTagParams<'a> {
 pub struct MlflowTrackingRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     client: Client,
     base_url: String,
@@ -81,7 +81,7 @@ where
 impl<E, R> MlflowTrackingRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// Create a new instance of `MlflowTrackingRecorder`.
     ///
@@ -190,7 +190,7 @@ where
 impl<E, R> Recorder<E, R> for MlflowTrackingRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     fn write(&mut self, record: border_core::record::Record) {
         let url = format!("{}/api/2.0/mlflow/runs/log-metric", self.base_url);
@@ -284,7 +284,7 @@ where
 impl<E, R> Drop for MlflowTrackingRecorder<E, R>
 where
     E: Env,
-    R: ReplayBufferBase,
+    R: ReplayBuffer,
 {
     /// Update run's status to "FINISHED" when dropped.
     ///

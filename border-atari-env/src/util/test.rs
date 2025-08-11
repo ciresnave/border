@@ -5,10 +5,10 @@ use crate::{
 };
 use anyhow::Result;
 use border_core::{
-    generic_replay_buffer::{BatchBase, SimpleReplayBuffer},
     record::Record,
-    Agent as Agent_, Configurable, Policy, ReplayBufferBase,
+    Agent as Agent_, Configurable, Policy, ReplayBuffer as ReplayBuffer_,
 };
+use border_generic_replay_buffer::{BatchBase, GenericReplayBuffer};
 use serde::Deserialize;
 use std::ptr::copy;
 
@@ -17,13 +17,13 @@ pub type Act = BorderAtariAct;
 pub type ObsFilter = BorderAtariObsRawFilter<Obs>;
 pub type ActFilter = BorderAtariActRawFilter<Act>;
 pub type EnvConfig = BorderAtariEnvConfig<Obs, Act, ObsFilter, ActFilter>;
-pub type ReplayBuffer = SimpleReplayBuffer<ObsBatch, ActBatch>;
+pub type ReplayBuffer = GenericReplayBuffer<ObsBatch, ActBatch>;
 pub type Env = BorderAtariEnv<Obs, Act, ObsFilter, ActFilter>;
 pub type Agent = RandomAgent;
 
 const FRAME_IN_BYTES: usize = 84 * 84;
 
-/// Consists the observation part of a batch in [SimpleReplayBuffer].
+/// Consists the observation part of a batch in [`GenericReplayBuffer`].
 pub struct ObsBatch {
     /// The number of samples in the batch.
     pub n: usize,
@@ -78,7 +78,7 @@ impl From<Obs> for ObsBatch {
     }
 }
 
-/// Consists the action part of a batch in [SimpleReplayBuffer].
+/// Consists the action part of a batch in [`GenericReplayBuffer`].
 pub struct ActBatch {
     /// The number of samples in the batch.
     pub n: usize,
@@ -164,7 +164,7 @@ impl Configurable for RandomAgent {
     }
 }
 
-impl<R: ReplayBufferBase> Agent_<Env, R> for RandomAgent {
+impl<R: ReplayBuffer_> Agent_<Env, R> for RandomAgent {
     fn train(&mut self) {
         self.train = true;
     }

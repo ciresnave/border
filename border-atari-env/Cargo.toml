@@ -18,6 +18,7 @@ border-core = { version = "0.0.9", path = "../border-core" }
 image = { workspace = true }
 tch = { workspace = true, optional = true }
 border-tch-agent = { version = "0.0.9", path = "../border-tch-agent", optional = true }
+border-generic-replay-buffer = { version = "0.0.9", path = "../border-generic-replay-buffer" }
 candle-core = { workspace = true, optional = true }
 serde = { workspace = true, features = ["derive"] }
 itertools = "0.10.1"

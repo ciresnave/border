@@ -1,0 +1,28 @@
+[package]
+name = "border-generic-replay-buffer"
+description = "A generic implementation of replaybuffer for Border"
+version.workspace = true
+edition.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+license.workspace = true
+readme = "README.md"
+
+[dependencies]
+border-core = { version = "0.0.9", path = "../border-core" }
+serde = { workspace = true, features = ["derive"] }
+serde_yaml = { workspace = true }
+# log = { workspace = true }
+# thiserror = { workspace = true }
+anyhow = { workspace = true }
+# chrono = { workspace = true }
+# aquamarine = { workspace = true }
+fastrand = { workspace = true }
+segment-tree = { workspace = true }
+# xxhash-rust = { workspace = true }
+# Consider to replace with fastrand
+rand = { workspace = true }
+
+[dev-dependencies]
+tempdir = { workspace = true }

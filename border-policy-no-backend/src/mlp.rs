@@ -1,6 +1,8 @@
 use crate::Mat;
 use serde::{Deserialize, Serialize};
 
+#[cfg(feature = "candle")]
+mod candle;
 #[cfg(feature = "tch")]
 mod tch;
 

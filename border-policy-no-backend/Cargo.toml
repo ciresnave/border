@@ -12,15 +12,19 @@ readme = "README.md"
 [dependencies]
 border-core = { version = "0.0.9", path = "../border-core" }
 border-tch-agent = { version = "0.0.9", path = "../border-tch-agent", optional = true }
+border-candle-agent = { version = "0.0.9", path = "../border-candle-agent", optional = true }
 serde = { workspace = true, features = ["derive"] }
 log = { workspace = true }
 anyhow = { workspace = true }
 tch = { workspace = true, optional = true }
+candle-core = { workspace = true, optional = true }
+candle-nn = { workspace = true, optional = true }
 rand = { workspace = true }
 
 [dev-dependencies]
 tempdir = { workspace = true }
-tch = { workspace = true }
+# tch = { workspace = true }
 
 [features]
 tch = ["border-tch-agent", "dep:tch"]
+candle = ["border-candle-agent", "dep:candle-core", "dep:candle-nn"]

@@ -13,7 +13,7 @@ border-policy-no-backend = { version = "0.0.9", path = "../../../border-policy-n
     "tch",
 ] }
 border-tch-agent = { version = "0.0.9", path = "../../../border-tch-agent" }
-border-core = { version = "0.0.9", path = "../../../border-core" }
+border-core = { version = "0.0.9", path = "../../../border-core", features = ["tch"] }
 serde = "1.0.194"
 tch = "0.16.0"
 bincode = "1.3.3"

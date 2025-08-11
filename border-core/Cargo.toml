@@ -20,8 +20,12 @@ aquamarine = { workspace = true }
 fastrand = { workspace = true }
 segment-tree = { workspace = true }
 xxhash-rust = { workspace = true }
+tch = { workspace = true, optional = true }
 # Consider to replace with fastrand
 rand = { workspace = true }
 
 [dev-dependencies]
 tempdir = { workspace = true }
+
+[features]
+tch = ["dep:tch"]

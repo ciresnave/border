@@ -159,15 +159,9 @@ fn eval(path: &str, n_episodes: usize, render: bool) -> Result<()> {
 
 fn main() -> Result<()> {
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info")).init();
-    let path = "../convert_policy/model/mlp.bincode";
+    // let path = "../convert_policy/model/mlp.bincode";
+    // let path = "../convert_policy/model/from_tch/mlp.bincode";
+    let path = "../convert_policy/model/from_candle/mlp.bincode";
     let _ = eval(path, 5, true)?;
     Ok(())
 }
-
-// #[test]
-// fn test_pendulum_edge() -> Result<()> {
-//     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info")).init();
-//     let path = "/root/border/examples/convert_policy/model/mlp.bincode";
-//     let _ = eval(path, 1, false)?;
-//     Ok(())
-// }

@@ -1,9 +1,7 @@
 use crate::{
     Actor, ActorManagerConfig, ActorStat, PushedItemMessage, ReplayBufferProxyConfig, SyncModel,
 };
-use border_core::{
-    Agent, Configurable, Env, ExperienceBuffer, ReplayBuffer, StepProcessor,
-};
+use border_core::{Agent, Configurable, Env, ExperienceBuffer, ReplayBuffer, StepProcessor};
 use crossbeam_channel::{bounded, /*unbounded,*/ Receiver, Sender};
 use log::info;
 use std::{

@@ -48,7 +48,7 @@ that transitions are properly formatted and stored in the replay buffer for trai
 
 [`SimpleStepProcessor<E, O, A>`] can be used with [`GenericReplayBuffer<O, A>`]. It converts `E::Obs` and
 `E::Act` into their respective [`BatchBase`] types and generates [`GenericTransitionBatch`]. This conversion
-relies on the trait bounds `O: From<E::Obs>` and `A: From<E::Act>`.
+relies on the trait bounds `E::Obs: Into<O>` and `E::Act: Into<A>`.
 
 # [`GenericReplayBuffer`]
 

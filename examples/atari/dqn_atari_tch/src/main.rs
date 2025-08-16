@@ -4,9 +4,10 @@ mod types;
 use anyhow::Result;
 use args::Args;
 use border_core::{
-    generic_replay_buffer::SimpleStepProcessorConfig, record::Recorder, Agent, Configurable,
-    Env as _, Evaluator as _, ReplayBuffer, StepProcessor, Trainer,
+    record::Recorder, Agent, Configurable, Env as _, Evaluator as _, ReplayBuffer as _,
+    StepProcessor, Trainer,
 };
+use border_generic_replay_buffer::SimpleStepProcessorConfig;
 use border_mlflow_tracking::MlflowTrackingClient;
 use border_tensorboard::TensorboardRecorder;
 use clap::Parser;

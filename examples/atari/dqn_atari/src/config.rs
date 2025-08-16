@@ -7,7 +7,8 @@ use border_candle_agent::{
     opt::OptimizerConfig,
     util::CriticLoss,
 };
-use border_core::{generic_replay_buffer::SimpleReplayBufferConfig, TrainerConfig};
+use border_core::TrainerConfig;
+use border_generic_replay_buffer::GenericReplayBufferConfig;
 use serde::Serialize;
 use std::marker::PhantomData;
 
@@ -15,7 +16,7 @@ use std::marker::PhantomData;
 pub struct DqnAtariConfig {
     pub args: Args,
     pub env_config: EnvConfig,
-    pub replay_buffer_config: SimpleReplayBufferConfig,
+    pub replay_buffer_config: GenericReplayBufferConfig,
     pub agent_config: DqnConfig<AtariCnn>,
     pub trainer_config: TrainerConfig,
 }
@@ -43,7 +44,7 @@ impl DqnAtariConfig {
         self.env_config.clone()
     }
 
-    pub fn clone_replay_buffer_config(&self) -> SimpleReplayBufferConfig {
+    pub fn clone_replay_buffer_config(&self) -> GenericReplayBufferConfig {
         self.replay_buffer_config.clone()
     }
 
@@ -52,8 +53,8 @@ impl DqnAtariConfig {
     }
 }
 
-fn create_replay_buffer_config(_args: &Args) -> SimpleReplayBufferConfig {
-    SimpleReplayBufferConfig {
+fn create_replay_buffer_config(_args: &Args) -> GenericReplayBufferConfig {
+    GenericReplayBufferConfig {
         capacity: 262144,
         seed: 42,
         per_config: None,

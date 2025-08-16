@@ -1,5 +1,7 @@
 #![doc = include_str!("../README.md")]
 mod batch;
+#[cfg(feature = "candle")]
+pub mod candle;
 mod config;
 mod iw_scheduler;
 mod replay_buffer;

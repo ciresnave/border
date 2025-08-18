@@ -8,6 +8,8 @@ mod tch;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 /// Multilayer perceptron with ReLU activation function.
+///
+/// The tanh() function is applied to the output layer to constrain the output values to the range [-1, 1].
 pub struct Mlp {
     /// Weights of layers.
     ws: Vec<Mat>,

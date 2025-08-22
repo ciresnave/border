@@ -195,4 +195,8 @@ where
         );
         record
     }
+
+    pub fn get_policy_model(&self) -> &BcModel<P> {
+        &self.policy_model
+    }
 }

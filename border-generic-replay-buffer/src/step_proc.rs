@@ -32,8 +32,10 @@ impl Default for SimpleStepProcessorConfig {
 /// # Type Parameters
 ///
 /// * `E` - The environment type, must implement `Env`
-/// * `O` - The observation batch type, must implement `BatchBase` and `From<E::Obs>`
-/// * `A` - The action batch type, must implement `BatchBase` and `From<E::Act>`
+/// * `O` - The observation batch type, must implement `BatchBase`.
+///   `E::Obs` must implement `Into<O>`.
+/// * `A` - The action batch type, must implement `BatchBase`.
+///   `E::Act` must implement `Into<A>`.
 pub struct SimpleStepProcessor<E, O, A> {
     /// The previous observation, used to construct transitions.
     prev_obs: Option<O>,
@@ -44,8 +46,10 @@ pub struct SimpleStepProcessor<E, O, A> {
 impl<E, O, A> StepProcessor<E> for SimpleStepProcessor<E, O, A>
 where
     E: Env,
-    O: BatchBase + From<E::Obs>,
-    A: BatchBase + From<E::Act>,
+    O: BatchBase,
+    A: BatchBase,
+    E::Obs: Into<O>,
+    E::Act: Into<A>,
 {
     type Config = SimpleStepProcessorConfig;
     type Output = GenericTransitionBatch<O, A>;

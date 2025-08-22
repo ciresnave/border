@@ -1,11 +1,15 @@
 use crate::Mat;
 use serde::{Deserialize, Serialize};
 
+#[cfg(feature = "candle")]
+mod candle;
 #[cfg(feature = "tch")]
-use tch::nn::VarStore;
+mod tch;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 /// Multilayer perceptron with ReLU activation function.
+///
+/// The tanh() function is applied to the output layer to constrain the output values to the range [-1, 1].
 pub struct Mlp {
     /// Weights of layers.
     ws: Vec<Mat>,
@@ -25,20 +29,5 @@ impl Mlp {
             }
         }
         x.tanh()
-    }
-
-    #[cfg(feature = "tch")]
-    pub fn from_varstore(vs: &VarStore, w_names: &[&str], b_names: &[&str]) -> Self {
-        let vars = vs.variables();
-        let ws: Vec<Mat> = w_names
-            .iter()
-            .map(|name| vars[&name.to_string()].copy().into())
-            .collect();
-        let bs: Vec<Mat> = b_names
-            .iter()
-            .map(|name| vars[&name.to_string()].copy().into())
-            .collect();
-
-        Self { ws, bs }
     }
 }

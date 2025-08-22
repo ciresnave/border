@@ -10,12 +10,19 @@ impl crate::Obs for DummyObs {
     }
 }
 
-// TODO: Consider to make this work with feature flag tch.
-// impl Into<tch::Tensor> for DummyObs {
-//     fn into(self) -> tch::Tensor {
-//         unimplemented!();
-//     }
-// }
+#[cfg(feature = "tch")]
+impl Into<tch::Tensor> for DummyObs {
+    fn into(self) -> tch::Tensor {
+        unimplemented!();
+    }
+}
+
+#[cfg(feature = "candle")]
+impl Into<candle_core::Tensor> for DummyObs {
+    fn into(self) -> candle_core::Tensor {
+        unimplemented!();
+    }
+}
 
 #[derive(Clone, Debug)]
 /// Dummy action.
@@ -27,30 +34,51 @@ impl crate::Act for DummyAct {
     }
 }
 
-// TODO: Consider to make this work with feature flag tch.
-// impl Into<tch::Tensor> for DummyAct {
-//     fn into(self) -> tch::Tensor {
-//         unimplemented!();
-//     }
-// }
+#[cfg(feature = "tch")]
+impl Into<tch::Tensor> for DummyAct {
+    fn into(self) -> tch::Tensor {
+        unimplemented!();
+    }
+}
 
-// TODO: Consider to make this work with feature flag tch.
-// impl From<tch::Tensor> for DummyAct {
-//     fn from(_value: tch::Tensor) -> Self {
-//         unimplemented!();
-//     }
-// }
+#[cfg(feature = "tch")]
+impl From<tch::Tensor> for DummyAct {
+    fn from(_value: tch::Tensor) -> Self {
+        unimplemented!();
+    }
+}
+
+#[cfg(feature = "candle")]
+impl Into<candle_core::Tensor> for DummyAct {
+    fn into(self) -> candle_core::Tensor {
+        unimplemented!();
+    }
+}
+
+#[cfg(feature = "candle")]
+impl From<candle_core::Tensor> for DummyAct {
+    fn from(_value: candle_core::Tensor) -> Self {
+        unimplemented!();
+    }
+}
 
 #[derive(Clone)]
 /// Dummy inner batch.
 pub struct DummyInnerBatch;
 
-// TODO: Consider to make this work with feature flag tch.
-// impl Into<tch::Tensor> for DummyInnerBatch {
-//     fn into(self) -> tch::Tensor {
-//         unimplemented!();
-//     }
-// }
+#[cfg(feature = "tch")]
+impl Into<tch::Tensor> for DummyInnerBatch {
+    fn into(self) -> tch::Tensor {
+        unimplemented!();
+    }
+}
+
+#[cfg(feature = "candle")]
+impl Into<candle_core::Tensor> for DummyInnerBatch {
+    fn into(self) -> candle_core::Tensor {
+        unimplemented!();
+    }
+}
 
 /// Dummy batch.
 pub struct DummyBatch;

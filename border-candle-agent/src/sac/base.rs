@@ -147,6 +147,10 @@ where
 
         Ok(record)
     }
+
+    pub fn get_policy_net(&self) -> &GaussianActor<P> {
+        &self.actor
+    }
 }
 
 impl<E, Q, P, R> Policy<E> for Sac<E, Q, P, R>

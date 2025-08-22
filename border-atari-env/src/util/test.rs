@@ -5,8 +5,7 @@ use crate::{
 };
 use anyhow::Result;
 use border_core::{
-    record::Record,
-    Agent as Agent_, Configurable, Policy, ReplayBuffer as ReplayBuffer_,
+    record::Record, Agent as Agent_, Configurable, Policy, ReplayBuffer as ReplayBuffer_,
 };
 use border_generic_replay_buffer::{BatchBase, GenericReplayBuffer};
 use serde::Deserialize;

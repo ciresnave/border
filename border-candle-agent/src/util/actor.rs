@@ -264,6 +264,10 @@ where
 
         Ok(())
     }
+
+    pub fn get_var_map(&self) -> &VarMap {
+        &self.varmap
+    }
 }
 
 impl<P> Clone for GaussianActor<P>

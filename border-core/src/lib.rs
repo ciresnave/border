@@ -12,5 +12,5 @@ pub use base::{
 };
 
 mod trainer;
-pub use evaluator::{DefaultEvaluator, Evaluator /*LossEvaluator*/};
+pub use evaluator::{DefaultEvaluator, Evaluator, NegLossEvaluator};
 pub use trainer::{Sampler, Trainer, TrainerConfig};

@@ -11,9 +11,9 @@
 use crate::{record::Record, Agent, Env, ReplayBuffer};
 use anyhow::Result;
 mod default_evaluator;
-// mod loss_evaluator;
+mod loss_evaluator;
 pub use default_evaluator::DefaultEvaluator;
-// pub use loss_evaluator::LossEvaluator;
+pub use loss_evaluator::NegLossEvaluator;
 
 /// Interface for evaluating reinforcement learning agents.
 ///

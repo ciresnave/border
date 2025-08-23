@@ -13,7 +13,7 @@ use border_core::{
     record::Recorder, Agent, Configurable, Env, Evaluator, ExperienceBuffer, ReplayBuffer, Trainer,
     TrainerConfig, TransitionBatch,
 };
-use border_generic_replay_buffer::{BatchBase, SimpleReplayBuffer};
+use border_generic_replay_buffer::{BatchBase, GenericReplayBuffer};
 use border_minari::{
     d4rl::pen::candle::{PenConverter, PenConverterConfig},
     MinariConverter, MinariDataset, MinariEnv, MinariEvaluator,
@@ -247,7 +247,7 @@ fn create_evaluator<T>(
     converter: T,
     dataset: &MinariDataset,
     render: bool,
-) -> Result<impl Evaluator<MinariEnv<T>>>
+) -> Result<impl Evaluator<MinariEnv<T>, GenericReplayBuffer<T::ObsBatch, T::ActBatch>>>
 where
     T: MinariConverter,
 {

@@ -238,7 +238,7 @@ impl Trainer {
     where
         E: Env,
         R: ReplayBuffer,
-        D: Evaluator<E>,
+        D: Evaluator<E, R>,
     {
         // Evaluation
         if self.opt_steps % self.eval_interval == 0 {
@@ -277,7 +277,7 @@ impl Trainer {
         E: Env,
         P: StepProcessor<E>,
         R: ExperienceBuffer<Item = P::Output> + ReplayBuffer,
-        D: Evaluator<E>,
+        D: Evaluator<E, R>,
     {
         let mut sampler = Sampler::new(env, step_proc);
         agent.train();
@@ -337,7 +337,7 @@ impl Trainer {
     where
         E: Env,
         R: ReplayBuffer,
-        D: Evaluator<E>,
+        D: Evaluator<E, R>,
     {
         // Return empty record
         self.warmup_period = 0;

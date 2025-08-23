@@ -232,7 +232,7 @@ where
     where
         E: Env,
         R: ReplayBuffer,
-        D: Evaluator<E>,
+        D: Evaluator<E, R>,
     {
         // Evaluation
         if self.opt_steps % self.eval_interval == 0 {
@@ -303,7 +303,7 @@ where
         guard_init_env: Arc<Mutex<bool>>,
     ) -> AsyncTrainStat
     where
-        D: Evaluator<E>,
+        D: Evaluator<E, R>,
     {
         // TODO: error handling
         let _env = {

@@ -11,7 +11,9 @@
 use crate::{record::Record, Agent, Env, ReplayBuffer};
 use anyhow::Result;
 mod default_evaluator;
+// mod loss_evaluator;
 pub use default_evaluator::DefaultEvaluator;
+// pub use loss_evaluator::LossEvaluator;
 
 /// Interface for evaluating reinforcement learning agents.
 ///
@@ -43,7 +45,7 @@ pub use default_evaluator::DefaultEvaluator;
 ///     }
 /// }
 /// ```
-pub trait Evaluator<E: Env> {
+pub trait Evaluator<E: Env, R: ReplayBuffer> {
     /// Evaluates an agent's performance in the environment.
     ///
     /// This method should:
@@ -77,7 +79,5 @@ pub trait Evaluator<E: Env> {
     /// configurations.
     ///
     /// [`Trainer`]: crate::Trainer
-    fn evaluate<R>(&mut self, agent: &mut Box<dyn Agent<E, R>>) -> Result<(f32, Record)>
-    where
-        R: ReplayBuffer;
+    fn evaluate(&mut self, agent: &mut Box<dyn Agent<E, R>>) -> Result<(f32, Record)>;
 }

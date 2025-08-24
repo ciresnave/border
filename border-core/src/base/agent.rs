@@ -67,7 +67,7 @@ pub trait Agent<E: Env, R: ReplayBuffer>: Policy<E> {
     ///
     /// Normally, agents are evaluated in an environment, so this method is only needed
     /// when loss-based evaluation is required.
-    fn loss(&self, _batch: &R::Batch) -> f32 {
+    fn loss(&self, _batch: R::Batch) -> f32 {
         unimplemented!("loss() method is not implemented");
     }
 

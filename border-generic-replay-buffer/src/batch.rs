@@ -86,6 +86,7 @@ pub trait BatchBase {
 /// ```ignore
 /// let batch = GenericTransitionBatch::<Tensor, Tensor>::with_capacity(32);
 /// ```
+#[derive(Debug, Clone)]
 pub struct GenericTransitionBatch<O, A>
 where
     O: BatchBase,

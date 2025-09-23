@@ -112,8 +112,8 @@ pub struct Trainer {
     /// Timer for optimization steps.
     timer_for_opt_steps: Duration,
 
-    /// Maximum evaluation reward achieved.
-    max_eval_reward: f32,
+    /// Maximum score achieved.
+    max_score: f32,
 
     /// Current environment step count.
     env_steps: usize,
@@ -146,7 +146,7 @@ impl Trainer {
             timer_for_samples: Duration::new(0, 0),
             opt_steps_counter: 0,
             timer_for_opt_steps: Duration::new(0, 0),
-            max_eval_reward: f32::MIN,
+            max_score: f32::MIN,
             env_steps: 0,
             opt_steps: 0,
         }
@@ -238,19 +238,19 @@ impl Trainer {
     where
         E: Env,
         R: ReplayBuffer,
-        D: Evaluator<E>,
+        D: Evaluator<E, R>,
     {
         // Evaluation
         if self.opt_steps % self.eval_interval == 0 {
-            info!("Starts evaluation of the trained model");
             agent.eval();
             let (score, record_eval) = evaluator.evaluate(agent)?;
             agent.train();
             record.merge_inplace(record_eval);
+            info!("Score: {}", score);
 
             // Save the best model up to the current iteration
-            if score > self.max_eval_reward {
-                self.max_eval_reward = score;
+            if score > self.max_score {
+                self.max_score = score;
                 recorder.save_model("best".as_ref(), agent)?;
             }
         };
@@ -277,7 +277,7 @@ impl Trainer {
         E: Env,
         P: StepProcessor<E>,
         R: ExperienceBuffer<Item = P::Output> + ReplayBuffer,
-        D: Evaluator<E>,
+        D: Evaluator<E, R>,
     {
         let mut sampler = Sampler::new(env, step_proc);
         agent.train();
@@ -337,7 +337,7 @@ impl Trainer {
     where
         E: Env,
         R: ReplayBuffer,
-        D: Evaluator<E>,
+        D: Evaluator<E, R>,
     {
         // Return empty record
         self.warmup_period = 0;

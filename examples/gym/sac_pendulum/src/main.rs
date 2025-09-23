@@ -35,7 +35,7 @@ use serde::Serialize;
 type Env = GymEnv<NdarrayConverter>;
 type ReplayBuffer = GenericReplayBuffer<TensorBatch, TensorBatch>;
 type StepProc = SimpleStepProcessor<Env, TensorBatch, TensorBatch>;
-type Evaluator = DefaultEvaluator<Env>;
+type Evaluator = DefaultEvaluator<Env, ReplayBuffer>;
 
 const DIM_OBS: i64 = 3;
 const DIM_ACT: i64 = 1;

@@ -100,6 +100,16 @@ where
     <R::Batch as TransitionBatch>::ObsBatch: Into<P::Input>,
     <R::Batch as TransitionBatch>::ActBatch: Into<Tensor>,
 {
+    fn loss(&self, batch: R::Batch) -> f32 {
+        self.loss_(batch)
+            .to_device(&Device::Cpu)
+            .expect("Error when moving loss to CPU")
+            .mean_all()
+            .unwrap()
+            .to_scalar()
+            .unwrap()
+    }
+
     /// For BC agent, this method does nothing.
     fn train(&mut self) {}
 
@@ -163,13 +173,11 @@ where
     <R::Batch as TransitionBatch>::ObsBatch: Into<P::Input>,
     <R::Batch as TransitionBatch>::ActBatch: Into<Tensor>,
 {
-    // Currently, this method supports only continuous action.
-    fn opt_(&mut self, buffer: &mut R) -> Record {
-        let batch = buffer.batch(self.batch_size).unwrap();
+    fn loss_(&self, batch: R::Batch) -> Tensor {
         let (obs, act, _, _, _, _, _, _) = batch.unpack();
         let obs = obs.into();
         let act = act.into().to_device(&self.device).unwrap();
-        let loss = match self.action_type {
+        match self.action_type {
             BcActionType::Discrete => {
                 panic!();
             }
@@ -178,7 +186,13 @@ where
                 mse(&act_, &act)
             }
         }
-        .unwrap();
+        .unwrap()
+    }
+
+    // Currently, this method supports only continuous action.
+    fn opt_(&mut self, buffer: &mut R) -> Record {
+        let batch = buffer.batch(self.batch_size).unwrap();
+        let loss = self.loss_(batch);
         self.policy_model.backward_step(&loss).unwrap();
 
         let mut record = Record::empty();

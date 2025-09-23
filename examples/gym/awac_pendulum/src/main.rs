@@ -15,7 +15,7 @@ use border_core::{
         SimpleStepProcessorConfig,
     },
     record::Recorder,
-    Agent, Configurable, DefaultEvaluator, Env as _, Evaluator as _, ReplayBuffer,
+    Agent, Configurable, DefaultEvaluator, Env as _, Evaluator as _, ReplayBuffer as _,
     StepProcessor, Trainer, TrainerConfig,
 };
 use border_mlflow_tracking::MlflowTrackingClient;
@@ -31,7 +31,7 @@ use serde::Serialize;
 type Env = GymEnv<NdarrayConverter>;
 type ReplayBuffer = SimpleReplayBuffer<TensorBatch, TensorBatch>;
 type StepProc = SimpleStepProcessor<Env, TensorBatch, TensorBatch>;
-type Evaluator = DefaultEvaluator<Env>;
+type Evaluator = DefaultEvaluator<Env, ReplayBuffer>;
 
 const DIM_OBS: i64 = 3;
 const DIM_ACT: i64 = 1;

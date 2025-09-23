@@ -13,6 +13,7 @@ numpy = "0.14.1"
 tch = { version = "0.16.1" }
 border-tch-agent = { version = "0.0.9", path = "../../../border-tch-agent" }
 border-core = { version = "0.0.9", path = "../../../border-core" }
+border-generic-replay-buffer = { version = "0.0.9", path = "../../../border-generic-replay-buffer" }
 border-tensorboard = { version = "0.0.9", path = "../../../border-tensorboard" }
 border-mlflow-tracking = { version = "0.0.9", path = "../../../border-mlflow-tracking" }
 border-atari-env = { version = "0.0.9", path = "../../../border-atari-env", features = ["tch"]}

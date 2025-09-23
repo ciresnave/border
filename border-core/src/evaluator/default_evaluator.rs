@@ -29,15 +29,17 @@ use anyhow::Result;
 /// let record = evaluator.evaluate(&mut agent)?;
 /// println!("Average return: {}", record.get_scalar("Episode return")?);
 /// ```
-pub struct DefaultEvaluator<E: Env> {
+pub struct DefaultEvaluator<E: Env, R: ReplayBuffer> {
     /// The number of episodes to run during evaluation.
     n_episodes: usize,
 
     /// The environment instance used for evaluation.
     env: E,
+
+    phantom: std::marker::PhantomData<R>,
 }
 
-impl<E: Env> Evaluator<E> for DefaultEvaluator<E> {
+impl<E: Env, R: ReplayBuffer> Evaluator<E, R> for DefaultEvaluator<E, R> {
     /// Evaluates a policy by running multiple episodes and calculating the average return.
     ///
     /// This method:
@@ -61,10 +63,7 @@ impl<E: Env> Evaluator<E> for DefaultEvaluator<E> {
     /// Returns an error if:
     /// - The environment fails to reset
     /// - The environment fails to step
-    fn evaluate<R>(&mut self, policy: &mut Box<dyn Agent<E, R>>) -> Result<(f32, Record)>
-    where
-        R: ReplayBuffer,
-    {
+    fn evaluate(&mut self, policy: &mut Box<dyn Agent<E, R>>) -> Result<(f32, Record)> {
         let mut r_total = 0f32;
 
         for ix in 0..self.n_episodes {
@@ -88,7 +87,7 @@ impl<E: Env> Evaluator<E> for DefaultEvaluator<E> {
     }
 }
 
-impl<E: Env> DefaultEvaluator<E> {
+impl<E: Env, R: ReplayBuffer> DefaultEvaluator<E, R> {
     /// Constructs a new [`DefaultEvaluator`].
     ///
     /// # Arguments
@@ -111,6 +110,7 @@ impl<E: Env> DefaultEvaluator<E> {
         Ok(Self {
             n_episodes,
             env: E::build(config, seed)?,
+            phantom: std::marker::PhantomData,
         })
     }
 }

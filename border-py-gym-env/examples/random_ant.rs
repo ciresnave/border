@@ -11,7 +11,7 @@ use serde::Deserialize;
 use std::default::Default;
 
 type Env = GymEnv<NdarrayConverter>;
-type Evaluator = DefaultEvaluator<Env>;
+type Evaluator = DefaultEvaluator<Env, NullReplayBuffer>;
 type Obs = <NdarrayConverter as GymEnvConverter>::Obs;
 type Act = <NdarrayConverter as GymEnvConverter>::Act;
 

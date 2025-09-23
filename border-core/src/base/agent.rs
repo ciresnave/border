@@ -60,6 +60,17 @@ pub trait Agent<E: Env, R: ReplayBuffer>: Policy<E> {
         let _ = self.opt_with_record(buffer);
     }
 
+    /// Computes the loss for a given batch of experiences.
+    ///
+    /// The loss is defined by the agent's implementation
+    /// (e.g., mean squared error, cross-entropy).
+    ///
+    /// Normally, agents are evaluated in an environment, so this method is only needed
+    /// when loss-based evaluation is required.
+    fn loss(&self, _batch: R::Batch) -> f32 {
+        unimplemented!("loss() method is not implemented");
+    }
+
     /// Performs an optimization step and returns training metrics.
     ///
     /// Similar to [`opt`], but also returns a [`Record`] containing training metrics

@@ -3,6 +3,11 @@ use crate::{record::Record, Agent, Env, ReplayBuffer};
 use anyhow::Result;
 
 /// Evaluate the agent with negative loss.
+///
+/// This evaluator computes the negative loss of the agent on a batch of experiences.
+/// The negative loss is returned as the evaluation score, so that lower loss corresponds to higher score.
+/// It uses the [`Agent::loss()`] method to compute the loss on the provided batch.
+///
 pub struct NegLossEvaluator<E: Env, R: ReplayBuffer>
 where
     <R as ReplayBuffer>::Batch: Clone,
@@ -29,7 +34,7 @@ impl<E: Env, R: ReplayBuffer> NegLossEvaluator<E, R>
 where
     <R as ReplayBuffer>::Batch: Clone,
 {
-    /// Constructs a new [`LossEvaluator`].
+    /// Constructs a new [`NegLossEvaluator`].
     pub fn new(batch: R::Batch) -> Result<Self> {
         Ok(Self {
             batch,

@@ -5,6 +5,7 @@
 ### Changed
 
 * Separate the generic replaybuffer into a separate crate (`border-generic-replay-buffer`).
+* Add NegLossEvaluator (`border-core`).
 
 ## v0.0.8 (2025-05-17)
 

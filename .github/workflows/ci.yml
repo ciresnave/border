@@ -45,7 +45,6 @@ jobs:
             pip install mujoco==3.1.6
             pip install gymnasium==1.0.0
             pip install git+https://github.com/Farama-Foundation/Gymnasium-Robotics
-            pip install pybullet==3.2.5
             pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
 
         - if: matrix.os != 'ubuntu-latest'
@@ -54,17 +53,7 @@ jobs:
             pip install --upgrade pip
             pip install swig==4.2.1
             pip install gymnasium==1.0.0
-            pip install pybullet==3.2.5
             pip install torch==2.3.0
-
-        - if: matrix.os == 'ubuntu-latest'
-          name: Install pybullet-gym
-          run:  |
-            git clone https://github.com/benelot/pybullet-gym.git
-            cd pybullet-gym
-            sed -i 's/return state, sum(self.rewards), bool(done), {}/return state, sum(self.rewards), bool(done), bool(done), {}/g' ./pybulletgym/envs/roboschool/envs/locomotion/walker_base_env.py
-            sed -i 's/id='\''AntPyBulletEnv-v0'\'',/id='\''AntPyBulletEnv-v0'\'', order_enforce=False,/g' ./pybulletgym/envs/__init__.py
-            pip install -e .
 
         - if: matrix.os != 'windows-latest'
           name: Set PYTHONPATH (Linux, macOS)

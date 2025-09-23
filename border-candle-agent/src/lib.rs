@@ -9,11 +9,9 @@ pub mod mlp;
 pub mod model;
 pub mod opt;
 pub mod sac;
-mod tensor_batch;
 pub mod util;
 use candle_core::{backend::BackendDevice, DeviceLocation, Module};
 use serde::{Deserialize, Serialize};
-pub use tensor_batch::{TensorBatch, ZeroTensor};
 
 #[derive(Clone, Debug, Copy, Deserialize, Serialize, PartialEq)]
 /// Device for using candle.
